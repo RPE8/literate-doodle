@@ -33,9 +33,14 @@ main {
   margin: 0; */
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 #keys-list li {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 80px;
   height: 80px;
 }
