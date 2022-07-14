@@ -5,6 +5,11 @@ const sounds = [
     path: "./assets/sounds/alright-man.mp3",
     buffer: null,
   },
+  {
+    id: "DeepDarkFantasies",
+    path: "./assets/sounds/deep-dark-fantasies.mp3",
+    buffer: null,
+  },
 ];
 
 soundsUtil = {};
@@ -55,6 +60,9 @@ init().then(
 
 function keyPressHandler(e) {
   const element = document.querySelector(`li[data-key="${e.keyCode}"]`);
+  if (!element) {
+    return;
+  }
   const soundId = element.getAttribute("data-sound-id");
   if (soundId && soundsUtil[soundId]) soundsUtil[soundId].playSound();
 }
