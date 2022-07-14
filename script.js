@@ -2,17 +2,41 @@ console.log("script is loaded");
 const sounds = [
   {
     id: "Allright",
+    text: "All Right",
     path: "./assets/sounds/alright-man.mp3",
+    charCode: 113,
     buffer: null,
   },
   {
     id: "DeepDarkFantasies",
+    text: "Deep Dark Fantasies",
     path: "./assets/sounds/deep-dark-fantasies.mp3",
+    charCode: 119,
+    buffer: null,
+  },
+  {
+    id: "Awwww",
+    text: "Awwww",
+    path: "./assets/sounds/awwww.mp3",
+    charCode: 101,
     buffer: null,
   },
 ];
 
 soundsUtil = {};
+
+function createListItemTemplate(info) {
+  const listItem = document.createElement("li");
+  listItem.setAttribute("data-key", info.charCode);
+  listItem.setAttribute("data-sound-id", info.id);
+  const kbd = document.createElement("kbd");
+  kbd.textContent = String.fromCharCode(info.charCode);
+  const span = document.createElement("span");
+  span.textContent = info.text;
+  listItem.appendChild(kbd);
+  listItem.appendChild(span);
+  return listItem;
+}
 
 function addSoundsUtil(sound) {
   soundsUtil[sound.id] = {
