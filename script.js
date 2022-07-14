@@ -6,6 +6,7 @@ const sounds = [
     path: "./assets/sounds/alright-man.mp3",
     charCode: 113,
     buffer: null,
+    onClickCallback: onListItemClickHandler,
   },
   {
     id: "DeepDarkFantasies",
@@ -13,6 +14,7 @@ const sounds = [
     path: "./assets/sounds/deep-dark-fantasies.mp3",
     charCode: 119,
     buffer: null,
+    onClickCallback: onListItemClickHandler,
   },
   {
     id: "Awwww",
@@ -20,6 +22,7 @@ const sounds = [
     path: "./assets/sounds/awwww.mp3",
     charCode: 101,
     buffer: null,
+    onClickCallback: onListItemClickHandler,
   },
   {
     id: "Ahahaha",
@@ -27,6 +30,7 @@ const sounds = [
     path: "./assets/sounds/ahahaha.mp3",
     charCode: 114,
     buffer: null,
+    onClickCallback: onListItemClickHandler,
   },
   {
     id: "AsWeCan",
@@ -34,6 +38,7 @@ const sounds = [
     path: "./assets/sounds/as-we-can.mp3",
     charCode: 116,
     buffer: null,
+    onClickCallback: onListItemClickHandler,
   },
   {
     id: "Areeeeeee",
@@ -41,8 +46,14 @@ const sounds = [
     path: "./assets/sounds/areeeeeee.mp3",
     charCode: 121,
     buffer: null,
+    onClickCallback: onListItemClickHandler,
   },
 ];
+
+function onListItemClickHandler(e) {
+  console.log("click");
+  playSoundById(e.currentTarget.getAttribute("data-sound-id"));
+}
 
 soundsUtil = {};
 
@@ -56,6 +67,10 @@ function createListItemTemplate(info) {
   span.textContent = info.text;
   listItem.appendChild(kbd);
   listItem.appendChild(span);
+  console.log(info);
+  if (info.onClickCallback) {
+    listItem.addEventListener("click", info.onClickCallback);
+  }
   return listItem;
 }
 
@@ -119,7 +134,11 @@ function keyPressHandler(e) {
     return;
   }
   const soundId = element.getAttribute("data-sound-id");
-  if (soundId && soundsUtil[soundId]) soundsUtil[soundId].playSound();
+  playSoundById(soundId);
+}
+
+function playSoundById(id) {
+  if (id && soundsUtil?.[id]) soundsUtil[id].playSound();
 }
 
 function loadAndProcessSounds(soundProccessSuccessCallback) {
