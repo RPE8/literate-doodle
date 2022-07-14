@@ -21,6 +21,13 @@ const sounds = [
     charCode: 101,
     buffer: null,
   },
+  {
+    id: "Ahahaha",
+    text: "Ahahaha",
+    path: "./assets/sounds/ahahaha.mp3",
+    charCode: 114,
+    buffer: null,
+  },
 ];
 
 soundsUtil = {};
@@ -92,6 +99,7 @@ init().then(
 );
 
 function keyPressHandler(e) {
+  console.log(e.keyCode);
   const element = document.querySelector(`li[data-key="${e.keyCode}"]`);
   if (!element) {
     return;
