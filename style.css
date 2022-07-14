@@ -39,7 +39,7 @@ main {
 #keys-list li {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: baseline;
   align-items: center;
   width: 80px;
   height: 80px;
