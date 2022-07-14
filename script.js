@@ -28,6 +28,13 @@ const sounds = [
     charCode: 114,
     buffer: null,
   },
+  {
+    id: "AsWeCan",
+    text: "As we can",
+    path: "./assets/sounds/as-we-can.mp3",
+    charCode: 116,
+    buffer: null,
+  },
 ];
 
 soundsUtil = {};
