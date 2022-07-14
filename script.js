@@ -39,21 +39,20 @@ function createListItemTemplate(info) {
 }
 
 function addSoundsUtil(sound) {
-  soundsUtil[sound.id] = {
-    buffer: sound.buffer,
-    playSound: function () {
-      if (this.audioContext) {
-        this.audioContext.close();
-      }
-      this.audioContext = new AudioContext();
-      this.audioSource = this.audioContext.createBufferSource();
-      this.audioSource.buffer = this.buffer;
-      this.audioSource.connect(this.audioContext.destination);
-      // }
-      this.audioSource.start(0);
+  soundsUtil[sound.id] = sound;
 
-      // this.audioSource.stop();
-    },
+  soundsUtil[sound.id].playSound = function () {
+    if (this.audioContext) {
+      this.audioContext.close();
+    }
+    this.audioContext = new AudioContext();
+    this.audioSource = this.audioContext.createBufferSource();
+    this.audioSource.buffer = this.buffer;
+    this.audioSource.connect(this.audioContext.destination);
+    // }
+    this.audioSource.start(0);
+
+    // this.audioSource.stop();
   };
 }
 
@@ -75,7 +74,17 @@ init().then(
   (context) => {
     audioContext = context;
     audioSource = context.createBufferSource();
-    loadAndProcessSounds(addSoundsUtil).then(() => {});
+    loadAndProcessSounds(addSoundsUtil).then(() => {
+      const list = document.getElementById("keys-list");
+
+      if (!list) {
+        return;
+      }
+
+      for (const [, sound] of Object.entries(soundsUtil)) {
+        list.appendChild(createListItemTemplate(sound));
+      }
+    });
   },
   (error) => {
     console.log(error);
