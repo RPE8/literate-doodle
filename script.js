@@ -13,13 +13,17 @@ function addSoundsUtil(sound) {
   soundsUtil[sound.id] = {
     buffer: sound.buffer,
     playSound: function () {
-      if (!this.audioContext || !this.audioSource) {
-        this.audioContext = new AudioContext();
-        this.audioSource = this.audioContext.createBufferSource();
-        this.audioSource.buffer = this.buffer;
-        this.audioSource.connect(this.audioContext.destination);
+      if (this.audioContext) {
+        this.audioContext.close();
       }
-      this.audioSource.start();
+      this.audioContext = new AudioContext();
+      this.audioSource = this.audioContext.createBufferSource();
+      this.audioSource.buffer = this.buffer;
+      this.audioSource.connect(this.audioContext.destination);
+      // }
+      this.audioSource.start(0);
+
+      // this.audioSource.stop();
     },
   };
 }
@@ -30,6 +34,7 @@ function init() {
   return new Promise((resolve, reject) => {
     try {
       const audioContext = new AudioContext();
+      window.addEventListener("keypress", keyPressHandler);
       resolve(audioContext);
     } catch (e) {
       reject("Web Audio API is not supported in this browser");
@@ -41,14 +46,18 @@ init().then(
   (context) => {
     audioContext = context;
     audioSource = context.createBufferSource();
-    loadAndProcessSounds(addSoundsUtil).then(() => {
-      soundsUtil["Allright"].playSound();
-    });
+    loadAndProcessSounds(addSoundsUtil).then(() => {});
   },
   (error) => {
     console.log(error);
   }
 );
+
+function keyPressHandler(e) {
+  const element = document.querySelector(`li[data-key="${e.keyCode}"]`);
+  const soundId = element.getAttribute("data-sound-id");
+  if (soundId && soundsUtil[soundId]) soundsUtil[soundId].playSound();
+}
 
 function loadAndProcessSounds(soundProccessSuccessCallback) {
   return new Promise((resolve, reject) => {
