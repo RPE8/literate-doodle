@@ -35,6 +35,13 @@ const sounds = [
     charCode: 116,
     buffer: null,
   },
+  {
+    id: "Areeeeeee",
+    text: "Areeeeeee",
+    path: "./assets/sounds/areeeeeee.mp3",
+    charCode: 121,
+    buffer: null,
+  },
 ];
 
 soundsUtil = {};
