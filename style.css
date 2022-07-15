@@ -1,3 +1,10 @@
+:root {
+  --page-bg-color: #f6f6f6;
+  --item-border-color: #0078aa;
+  --item-bg-color: rgba(58, 180, 242, 0.1);
+  --item-border-color-interaction: #f2df3a;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -12,7 +19,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f6f6f6;
+  background-color: var(--page-bg-color);
 }
 
 main {
@@ -29,9 +36,8 @@ main {
 
 #keys-list {
   list-style-type: none;
-  /* padding: 0;
-  margin: 0; */
   display: flex;
+  justify-content: center;
   gap: 10px;
   flex-wrap: wrap;
 }
@@ -39,13 +45,12 @@ main {
 #keys-list li {
   display: flex;
   flex-direction: column;
-  justify-content: baseline;
   align-items: center;
   transition: all 0.07s;
   width: 80px;
   height: 80px;
-  border: 1px #0078aa solid;
-  background-color: rgba(58, 180, 242, 0.1);
+  border: 1px var(--item-border-color) solid;
+  background-color: var(--item-bg-color);
 }
 
 #keys-list li span {
@@ -54,6 +59,6 @@ main {
 
 #keys-list .interaction {
   transform: scale(1.1);
-  border: 1px #f2df3a solid;
-  box-shadow: 0 0 10px #f2df3a;
+  border: 1px var(--item-border-color-interaction) solid;
+  box-shadow: 0 0 10px var(--item-border-color-interaction);
 }
