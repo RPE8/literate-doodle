@@ -6,6 +6,7 @@ const sounds = [
     path: "./assets/sounds/alright-man.mp3",
     charCode: 113,
     buffer: null,
+    pos: 1,
     onClickCallback: onListItemClickHandler,
   },
   {
@@ -14,6 +15,7 @@ const sounds = [
     path: "./assets/sounds/deep-dark-fantasies.mp3",
     charCode: 119,
     buffer: null,
+    pos: 2,
     onClickCallback: onListItemClickHandler,
   },
   {
@@ -22,6 +24,7 @@ const sounds = [
     path: "./assets/sounds/awwww.mp3",
     charCode: 101,
     buffer: null,
+    pos: 3,
     onClickCallback: onListItemClickHandler,
   },
   {
@@ -30,6 +33,7 @@ const sounds = [
     path: "./assets/sounds/ahahaha.mp3",
     charCode: 114,
     buffer: null,
+    pos: 4,
     onClickCallback: onListItemClickHandler,
   },
   {
@@ -38,6 +42,7 @@ const sounds = [
     path: "./assets/sounds/as-we-can.mp3",
     charCode: 116,
     buffer: null,
+    pos: 5,
     onClickCallback: onListItemClickHandler,
   },
   {
@@ -46,6 +51,7 @@ const sounds = [
     path: "./assets/sounds/areeeeeee.mp3",
     charCode: 121,
     buffer: null,
+    pos: 6,
     onClickCallback: onListItemClickHandler,
   },
   {
@@ -54,13 +60,26 @@ const sounds = [
     path: "./assets/sounds/boynextdoor.mp3",
     charCode: 97,
     buffer: null,
+    pos: 7,
     onClickCallback: onListItemClickHandler,
   },
 ];
 
 function onListItemClickHandler(e) {
   console.log("click");
-  playSoundById(e.currentTarget.getAttribute("data-sound-id"));
+  handleItemInteraction(e.currentTarget);
+}
+
+function handleItemInteraction(element) {
+  if (!element) {
+    return;
+  }
+
+  element.classList.add("interaction");
+
+  const soundId = element.getAttribute("data-sound-id");
+
+  playSoundById(soundId);
 }
 
 soundsUtil = {};
@@ -124,10 +143,19 @@ init().then(
       if (!list) {
         return;
       }
-
+      let sortedSounds = [];
       for (const [, sound] of Object.entries(soundsUtil)) {
-        list.appendChild(createListItemTemplate(sound));
+        sortedSounds.push(sound);
       }
+
+      sortedSounds.sort((a, b) => a.pos - b.pos);
+      sortedSounds.forEach((sound) => {
+        const listItem = createListItemTemplate(sound);
+        listItem.addEventListener("transitionend", (e) => {
+          e.currentTarget.classList.remove("interaction");
+        });
+        list.appendChild(listItem);
+      });
     });
   },
   (error) => {
@@ -141,8 +169,8 @@ function keyPressHandler(e) {
   if (!element) {
     return;
   }
-  const soundId = element.getAttribute("data-sound-id");
-  playSoundById(soundId);
+
+  handleItemInteraction(element);
 }
 
 function playSoundById(id) {
