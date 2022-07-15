@@ -48,6 +48,14 @@ const sounds = [
     buffer: null,
     onClickCallback: onListItemClickHandler,
   },
+  {
+    id: "Boynextdoor",
+    text: "Boy next door",
+    path: "./assets/sounds/boynextdoor.mp3",
+    charCode: 97,
+    buffer: null,
+    onClickCallback: onListItemClickHandler,
+  },
 ];
 
 function onListItemClickHandler(e) {
